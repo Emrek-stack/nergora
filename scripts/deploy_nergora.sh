@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Deploy script for nergora-web
-# Usage: sudo ./scripts/deploy_nergora.sh <git-repo-url> [branch] [deploy-user]
+# Usage: ./scripts/deploy_nergora.sh <git-repo-url> [branch] [deploy-user]
 
 REPO_URL="${1:-}"
 BRANCH="${2:-main}"
@@ -18,8 +18,7 @@ if [ -z "$REPO_URL" ]; then
 fi
 
 if [ "$(id -u)" -ne 0 ]; then
-  echo "This script must be run as root (sudo)."
-  exit 1
+  echo "Warning: not running as root. Some operations may fail (writing /etc, systemctl)."
 fi
 
 echo "Deploying $REPO_URL (branch: $BRANCH) to $DEPLOY_DIR as $DEPLOY_USER"
@@ -52,11 +51,19 @@ fi
 cd "$DEPLOY_DIR"
 echo "Installing dependencies with $PKG_MANAGER..."
 if [ "$PKG_MANAGER" = "pnpm" ]; then
-  sudo -u "$DEPLOY_USER" pnpm install --frozen-lockfile --ignore-scripts || sudo -u "$DEPLOY_USER" pnpm install
-  sudo -u "$DEPLOY_USER" pnpm build
+  if [ -f pnpm-lock.yaml ]; then
+    su -s /bin/bash -c "pnpm install --frozen-lockfile --ignore-scripts || pnpm install" "$DEPLOY_USER"
+  else
+    su -s /bin/bash -c "pnpm install" "$DEPLOY_USER"
+  fi
+  su -s /bin/bash -c "pnpm build" "$DEPLOY_USER"
 else
-  sudo -u "$DEPLOY_USER" npm ci || sudo -u "$DEPLOY_USER" npm install
-  sudo -u "$DEPLOY_USER" npm run build
+  if [ -f package-lock.json ]; then
+    su -s /bin/bash -c "npm ci" "$DEPLOY_USER" || su -s /bin/bash -c "npm install" "$DEPLOY_USER"
+  else
+    su -s /bin/bash -c "npm install" "$DEPLOY_USER"
+  fi
+  su -s /bin/bash -c "npm run build" "$DEPLOY_USER"
 fi
 
 # Create systemd service
