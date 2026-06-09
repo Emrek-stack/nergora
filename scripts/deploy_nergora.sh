@@ -49,6 +49,52 @@ else
 fi
 
 cd "$DEPLOY_DIR"
+# Check Node.js version (Next.js requires >=20.9.0)
+if ! command -v node >/dev/null 2>&1; then
+  cat <<'MSG'
+Error: Node.js is not installed or not in PATH.
+Next.js requires Node.js >=20.9.0. Install Node.js or use nvm.
+
+Ubuntu/Debian (as root):
+  curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+  apt-get install -y nodejs
+
+macOS (with Homebrew):
+  brew install node@20
+
+Per-user via nvm (recommended if you don't want system install):
+  su -s /bin/bash - "$DEPLOY_USER" -c "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash"
+  su -s /bin/bash - "$DEPLOY_USER" -c "export NVM_DIR=\"$HOME/.nvm\" && . \"$HOME/.nvm/nvm.sh\" && nvm install 20 && nvm use 20"
+
+After installing Node.js (>=20.9.0), re-run this script.
+MSG
+  exit 1
+fi
+
+NODE_VERSION_FULL=$(node -v | sed 's/^v//')
+NODE_MAJOR=$(echo "$NODE_VERSION_FULL" | cut -d. -f1)
+NODE_MINOR=$(echo "$NODE_VERSION_FULL" | cut -d. -f2)
+if [ "$NODE_MAJOR" -lt 20 ] || { [ "$NODE_MAJOR" -eq 20 ] && [ "$NODE_MINOR" -lt 9 ]; }; then
+  cat <<MSG
+Error: Node.js $NODE_VERSION_FULL detected. Next.js requires Node.js >=20.9.0.
+Please upgrade Node.js. Suggested options:
+
+Ubuntu/Debian (as root):
+  curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+  apt-get install -y nodejs
+
+macOS (with Homebrew):
+  brew install node@20
+
+Per-user via nvm (recommended):
+  su -s /bin/bash - "$DEPLOY_USER" -c "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash"
+  su -s /bin/bash - "$DEPLOY_USER" -c "export NVM_DIR=\"$HOME/.nvm\" && . \"$HOME/.nvm/nvm.sh\" && nvm install 20 && nvm use 20"
+
+After upgrading to Node.js >=20.9.0, re-run this script.
+MSG
+  exit 1
+fi
+
 echo "Installing dependencies with $PKG_MANAGER..."
 if [ "$PKG_MANAGER" = "pnpm" ]; then
   if [ -f pnpm-lock.yaml ]; then
