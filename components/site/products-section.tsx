@@ -1,33 +1,40 @@
 import type { Dictionary } from "@/lib/i18n";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 
 export function ProductsSection({ dictionary }: { dictionary: Dictionary }) {
   const { products } = dictionary.home;
 
   return (
-    <section className="border-b border-border/70">
-      <div className="mx-auto max-w-7xl px-6 py-24">
-        <div className="max-w-2xl">
-          <p className="text-sm font-medium text-primary">{products.eyebrow}</p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight">
+    <section className="bg-background py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-base/7 font-semibold text-primary">{products.eyebrow}</h2>
+          <p className="mt-2 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
             {products.title}
-          </h2>
-          <p className="mt-4 text-muted-foreground">
+          </p>
+          <p className="mt-6 text-lg/8 text-muted-foreground">
             {products.description}
           </p>
         </div>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
-          {products.items.map((product) => (
-            <div
-              key={product.name}
-              className="rounded-2xl border border-border bg-card p-6 hover:border-primary/50"
-            >
-              <h3 className="text-lg font-semibold">{product.name}</h3>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                {product.description}
-              </p>
-            </div>
-          ))}
+        <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:max-w-none">
+          <div className="grid max-w-xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3">
+            {products.items.map((product) => (
+              <Card key={product.name} className="flex flex-col border-border/60 bg-card/50 transition-all hover:bg-card/80 hover:shadow-md">
+                <CardHeader>
+                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                    <div className="h-5 w-5 rounded-sm bg-primary/80" />
+                  </div>
+                  <CardTitle className="text-xl">{product.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-base leading-7">
+                    {product.description}
+                  </CardDescription>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     </section>
