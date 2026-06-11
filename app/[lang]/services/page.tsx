@@ -141,6 +141,8 @@ export default async function ServicesPage({
           </div>
         </section>
 
+        <TechStackSection copy={servicesPage.techStack} />
+
         <section>
           <div className="mx-auto max-w-7xl px-6 py-24">
             <div className="rounded-3xl border border-primary/20 bg-primary/10 p-10 md:p-14">
@@ -169,5 +171,45 @@ export default async function ServicesPage({
 
       <Footer dictionary={dictionary} />
     </>
+  );
+}
+
+function TechStackSection({ copy }: { copy: any }) {
+  const stack = [
+    { name: "Kubernetes", color: "text-[#326CE5] border-[#326CE5]/20 bg-[#326CE5]/5" },
+    { name: "Docker", color: "text-[#2496ED] border-[#2496ED]/20 bg-[#2496ED]/5" },
+    { name: "ArgoCD", color: "text-[#EF7B4D] border-[#EF7B4D]/20 bg-[#EF7B4D]/5" },
+    { name: "GitLab CI", color: "text-[#FC6D26] border-[#FC6D26]/20 bg-[#FC6D26]/5" },
+    { name: "Terraform", color: "text-[#844FBA] border-[#844FBA]/20 bg-[#844FBA]/5" },
+    { name: "Prometheus", color: "text-[#E6522C] border-[#E6522C]/20 bg-[#E6522C]/5" },
+    { name: "Grafana", color: "text-[#F46800] border-[#F46800]/20 bg-[#F46800]/5" },
+    { name: "SonarQube", color: "text-[#4E9BCD] border-[#4E9BCD]/20 bg-[#4E9BCD]/5" },
+  ];
+
+  return (
+    <section className="border-b border-border/70 overflow-hidden py-24">
+      <div className="mx-auto max-w-7xl px-6 text-center">
+        <p className="text-sm font-medium text-primary">
+          {copy.eyebrow}
+        </p>
+        <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
+          {copy.title}
+        </h2>
+        <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
+          {copy.description}
+        </p>
+
+        <div className="mt-16 flex flex-wrap justify-center gap-4 sm:gap-6">
+          {stack.map((tech) => (
+            <div
+              key={tech.name}
+              className={`flex items-center justify-center rounded-2xl border px-6 py-4 font-bold text-xl tracking-tight shadow-sm transition-transform hover:scale-105 ${tech.color}`}
+            >
+              {tech.name}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

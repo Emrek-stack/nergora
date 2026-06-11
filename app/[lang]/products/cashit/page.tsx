@@ -76,6 +76,8 @@ const content = {
         text: "A focused interface for support teams and managed service providers.",
       },
     ],
+    integrationTitle: "E-commerce & ERP Integrations",
+    integrationDescription: "Seamlessly connect with your favorite marketplaces, e-invoice providers, and accounting software to keep your business in sync.",
     platformTitle: "A product under the Nergora platform.",
     platformText:
       "Cashit is designed as a remote access layer for support teams, IT providers and organizations that need controlled device access.",
@@ -131,6 +133,8 @@ const content = {
         text: "Destek ekipleri ve yönetilen servis sağlayıcıları için odaklı arayüz.",
       },
     ],
+    integrationTitle: "E-Ticaret ve ERP Entegrasyonları",
+    integrationDescription: "İşinizi senkronize tutmak için favori pazaryerleri, e-fatura sağlayıcıları ve muhasebe yazılımlarınızla sorunsuz entegre olun.",
     platformTitle: "Nergora platformu altında bir ürün.",
     platformText:
       "Cashit; destek ekipleri, BT sağlayıcıları ve kontrollü cihaz erişimine ihtiyaç duyan organizasyonlar için uzaktan erişim katmanı olarak tasarlanır.",
@@ -186,6 +190,8 @@ const content = {
         text: "Een gerichte interface voor supportteams en managed service providers.",
       },
     ],
+    integrationTitle: "E-commerce & ERP Integraties",
+    integrationDescription: "Koppel naadloos met uw favoriete marktplaatsen, e-factuur providers en boekhoudsoftware.",
     platformTitle: "Een product binnen het Nergora-platform.",
     platformText:
       "Cashit is ontworpen als remote access-laag voor supportteams, IT-providers en organisaties die gecontroleerde apparaattoegang nodig hebben.",
@@ -588,6 +594,46 @@ function ProductVisual({
   );
 }
 
+function IntegrationsSection({ copy }: { copy: ProductContent }) {
+  const integrations = [
+    { name: "Trendyol", color: "text-[#f27a1a] border-[#f27a1a]/20 bg-[#f27a1a]/5" },
+    { name: "Hepsiburada", color: "text-[#ff6000] border-[#ff6000]/20 bg-[#ff6000]/5" },
+    { name: "Amazon", color: "text-[#ff9900] border-[#ff9900]/20 bg-[#ff9900]/5" },
+    { name: "n11", color: "text-[#e31837] border-[#e31837]/20 bg-[#e31837]/5" },
+    { name: "PttAVM", color: "text-[#00529b] border-[#00529b]/20 bg-[#00529b]/5" },
+    { name: "E-Fatura", color: "text-emerald-600 border-emerald-600/20 bg-emerald-600/5" },
+    { name: "Logo Yazılım", color: "text-[#0058a9] border-[#0058a9]/20 bg-[#0058a9]/5" },
+    { name: "Mikro Yazılım", color: "text-[#005b9f] border-[#005b9f]/20 bg-[#005b9f]/5" },
+  ];
+
+  return (
+    <section className="border-b border-border/70 overflow-hidden py-24">
+      <div className="mx-auto max-w-7xl px-6 text-center">
+        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+          {copy.integrationTitle}
+        </h2>
+        <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
+          {copy.integrationDescription}
+        </p>
+
+        <div className="mt-16 flex flex-wrap justify-center gap-4 sm:gap-6">
+          {integrations.map((integration) => (
+            <div
+              key={integration.name}
+              className={cn(
+                "flex items-center justify-center rounded-2xl border px-6 py-4 font-bold text-xl tracking-tight shadow-sm transition-transform hover:scale-105",
+                integration.color
+              )}
+            >
+              {integration.name}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default async function CashitPage({
   params,
 }: {
@@ -676,6 +722,8 @@ export default async function CashitPage({
             </div>
           </div>
         </section>
+
+        <IntegrationsSection copy={copy} />
 
         <section>
           <div className="mx-auto max-w-7xl px-6 py-20">

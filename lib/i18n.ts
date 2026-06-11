@@ -204,6 +204,12 @@ export const dictionaries = {
           "Nergora can support your team with enterprise software development, DevOps, production operations and platform architecture.",
         cta: "Contact Nergora",
       },
+      techStack: {
+        eyebrow: "Technologies",
+        title: "Modern DevOps & Cloud Native Ecosystem",
+        description:
+          "We provide comprehensive system administration, Kubernetes management, CI/CD automation, GitOps, and DevSecOps services using industry-standard tools.",
+      },
     },
     contactPage: {
       hero: {
@@ -456,6 +462,12 @@ export const dictionaries = {
           "Nergora; kurumsal yazılım geliştirme, DevOps, üretim operasyonları ve platform mimarisiyle ekibinizi destekleyebilir.",
         cta: "Nergora ile İletişime Geç",
       },
+      techStack: {
+        eyebrow: "Teknolojiler",
+        title: "Modern DevOps ve Cloud Native Ekosistemi",
+        description:
+          "Endüstri standardı araçları kullanarak kapsamlı sistem yönetimi, Kubernetes yönetimi, CI/CD otomasyonu, GitOps ve DevSecOps hizmetleri ile destek veriyoruz.",
+      },
     },
     contactPage: {
       hero: {
@@ -705,6 +717,12 @@ export const dictionaries = {
         description:
           "Nergora kan je team ondersteunen met enterprise softwareontwikkeling, DevOps, productieoperations en platformarchitectuur.",
         cta: "Neem contact op met Nergora",
+      },
+      techStack: {
+        eyebrow: "Technologieën",
+        title: "Modern DevOps & Cloud Native Ecosysteem",
+        description:
+          "Wij bieden uitgebreid systeembeheer, Kubernetes-management, CI/CD-automatisering, GitOps en DevSecOps-diensten met behulp van industriestandaard tools.",
       },
     },
     contactPage: {
